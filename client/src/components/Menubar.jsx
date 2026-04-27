@@ -28,7 +28,6 @@ const Menubar = () => {
       {/* Mobile hamburger */}
       <div className="flex md:hidden">
         <button onClick={() => setMenu((prev) => !prev)}>
-          {console.log(menuOpen)}
           {menuOpen ? (
             <X size={24} className="cursor-pointer" />
           ) : (
