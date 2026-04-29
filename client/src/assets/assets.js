@@ -3,12 +3,14 @@ import video_banner from "./home-page-banner.mp4";
 import people from "./people.png";
 import people_org from "./people-org.png";
 import slide_icon from "./slide_icon.svg";
+import credits from "./credits.png";
 export const assets = {
   logo,
   video_banner,
   people,
   people_org,
   slide_icon,
+  credits
 };
 
 export const steps = [
@@ -82,5 +84,24 @@ export const testimonials = [
       "We were impressed by its ability to account for pesky, feathery hair without making an image look jagged and amateurish.",
     author: "Michael Chen",
     handle: "@coding_newbie",
+  },
+];
+
+export const FOOTER_CONSTANTS = [
+  {
+    url: "https://www.linkedin.com/in/aditya-jainn1/",
+    logo: "https://img.icons8.com/fluent/30/000000/facebook-new.png",
+  },
+  {
+    url: "https://www.linkedin.com/in/aditya-jainn1/",
+    logo: "https://img.icons8.com/fluent/30/000000/linkedin-2.png",
+  },
+  {
+    url: "https://www.linkedin.com/in/aditya-jainn1/",
+    logo: "https://img.icons8.com/fluent/30/000000/instagram-new.png",
+  },
+  {
+    url: "https://www.linkedin.com/in/aditya-jainn1/",
+    logo: "https://img.icons8.com/fluent/30/000000/twitter.png",
   },
 ];

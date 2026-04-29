@@ -1,12 +1,26 @@
 import { useState } from "react";
 import { assets } from "../assets/assets";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router";
+import { Show, SignInButton, SignUpButton, useClerk, UserButton, useUser } from "@clerk/react";
 const Menubar = () => {
-  const [menuOpen, setMenu] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const {openSignIn , openSignUp} = useClerk();
+  const {user} = useUser();
+  const openRegister = ()=> {
+    setMenuOpen(false);
+    openSignUp({});
+  }
+
+  const openLogin = ()=>{
+    setMenuOpen(false);
+    openSignIn({});
+  }
+
   return (
     <nav className="bg-white px-8 py-4 flex justify-between items-center">
       {/* left side: logo + text */}
-      <div className="flex items-center space-x-2">
+      <Link className="flex items-center space-x-2" to="/">
         <img
           src={assets.logo}
           alt="logo"
@@ -15,19 +29,39 @@ const Menubar = () => {
         <span className="text-2xl font-semibold text-indigo-700 cursor-pointer">
           remove.<span className="text-gray-400 cursor-pointer">bg</span>
         </span>
-      </div>
+      </Link>
       {/* right side : Action button */}
       <div className="hidden md:flex items-center space-x-4">
-        <button className="text-gray-700 hover:text-blue-600 font-medium">
-          Login
-        </button>
-        <button className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium px-4 py-2 rounded-full transition-all">
-          Sign up
-        </button>
+        <Show when="signed-out">
+          <button
+            className="text-gray-700 hover:text-blue-600 font-medium "
+            onClick={openLogin}>
+            Login
+          </button>
+          <button
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium px-4 py-2 rounded-full transition-all"
+            onClick={openRegister}>
+            Sign up
+          </button>
+        </Show>
+        <Show when="signed-in">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button className="flex items-center gap-2 bg-blue-100 px-4 sm:px-5 py-1.5 sm:py-2.5 rounded-full hover:scale-105 transition-all duration-500 cursor-pointer">
+              <img src={assets.credits} alt="credits" height={24} width={24}/>
+              <p className="text-xs sm:text-sm font-medium text-gray-700">
+                Credits: 0
+              </p>
+            </button>
+            <p className="text-gray-600 max-sm:hidden">
+              Hi,{user?.username}
+            </p>
+          </div>
+          <UserButton />
+        </Show>
       </div>
       {/* Mobile hamburger */}
       <div className="flex md:hidden">
-        <button onClick={() => setMenu((prev) => !prev)}>
+        <button onClick={() => setMenuOpen((prev) => !prev)}>
           {menuOpen ? (
             <X size={24} className="cursor-pointer" />
           ) : (
@@ -38,8 +72,25 @@ const Menubar = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="absolute top-16 right-8 bg-white shadow-md rounded-md flex flex-col space-y-4 w-40 p-4">
-          <button className="text-gray-700 hover:text-blue-600 font-medium">Login</button>
-          <button className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium px-4 py-2 rounded-full transition-all text-center">Sign up</button>
+          <Show when="signed-out">
+            <button className="text-gray-700 hover:text-blue-600 font-medium"
+              onClick={openLogin}>
+              Login
+            </button>
+            <button className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium px-4 py-2 rounded-full transition-all text-center"
+            onClick={openRegister}>
+              Sign up
+            </button>
+          </Show>
+          <Show when="signed-in">
+            <div className="flex items-center gap-2 sm:gap-3 ">
+              <button className="flex items-center gap-2 bg-blue-100 px-4 py-1.5 sm:py-2.5 rounded-full hover:scale-105 transition-all duration-500 cursor-pointer">
+                <img src={assets.credits} alt="credits" height={24} width={24} />
+                <p className="text-xs font-medium sm:text-sm text-gray-600 "> Credits: 0</p>
+              </button>
+            </div>
+            <UserButton />
+          </Show>
         </div>
       )}
     </nav>

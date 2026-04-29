@@ -1,6 +1,8 @@
 import React from 'react'
 import { assets } from '../assets/assets'
+import toast, { Toaster } from "react-hot-toast";
 const Header = () => {
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
       {/* left side : video banner */}
@@ -33,7 +35,6 @@ const Header = () => {
           <label htmlFor="upload1" className='bg-black text-white font-medium px-8 py-4 rounded-full hover:opacity-90 transition-transform hover:scale-105 text-lg cursor-pointer'>
             Upload your image
           </label>
-
         </div>
       </div>
     </div>
